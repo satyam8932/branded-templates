@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap');
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: 'Inter', 'Carlito', sans-serif;
+    color: #1E2530;
+    font-size: 10.3pt;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  svg text { font-family: 'Inter', 'Carlito', sans-serif; }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    position: relative;
+    page-break-after: always;
+    break-after: page;
+    overflow: hidden;
+  }
+  .pad { padding: 56px 60px; }
+  .last { page-break-after: auto; break-after: auto; }
+
+  /* ---------- COVER ---------- */
+  .cover {
+    background: #101230;
+    background: linear-gradient(160deg, #0B1130 0%, #161B4A 45%, #1B2B66 100%);
+    color: #ffffff;
+    height: 297mm;
+  }
+  .cover-eyebrow {
+    letter-spacing: 3px;
+    font-size: 10.5pt;
+    color: #8EA0E8;
+    font-weight: bold;
+    margin-bottom: 230px;
+  }
+  .cover-title {
+    font-family: 'Fraunces', 'Caladea', serif;
+    font-size: 46pt;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .cover-sub {
+    font-size: 16pt;
+    color: #C7D2FE;
+    margin-top: 16px;
+    font-weight: bold;
+  }
+  .cover-tag {
+    font-size: 11pt;
+    color: #93A3D8;
+    margin-top: 10px;
+    font-style: italic;
+  }
+  .cover-rule {
+    width: 64px;
+    height: 4px;
+    background: #6D7FF0;
+    margin-top: 28px;
+    border-radius: 2px;
+  }
+  .cover-meta {
+    position: absolute;
+    bottom: 64px;
+    left: 60px;
+    right: 60px;
+    border-top: 1px solid rgba(255,255,255,0.18);
+    padding-top: 22px;
+    display: table;
+    width: 100%;
+  }
+  .cover-meta-cell {
+    display: table-cell;
+    width: 33%;
+    color: #C7D2FE;
+    font-size: 9.5pt;
+    vertical-align: top;
+  }
+  .cover-meta-cell b { display:block; color:#fff; font-size:10.5pt; margin-bottom:3px; }
+
+  /* ---------- HEADINGS ---------- */
+  .kicker {
+    color: #4F46E5;
+    font-size: 9pt;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  h1.section-title {
+    font-size: 22pt;
+    color: #11152B;
+    font-weight: bold;
+    margin-bottom: 22px;
+    letter-spacing: -0.3px;
+  }
+  h2.sub-title {
+    font-size: 13pt;
+    color: #11152B;
+    font-weight: bold;
+    margin: 22px 0 10px 0;
+  }
+  p { margin-bottom: 10px; color: #3A4257; }
+  .lead { font-size: 11pt; color: #2B3247; margin-bottom: 18px; }
+
+  .pagefoot {
+    position: absolute;
+    bottom: 28px;
+    left: 60px;
+    right: 60px;
+    font-size: 8pt;
+    color: #A6ACBE;
+    border-top: 1px solid #ECEEF3;
+    padding-top: 8px;
+    display: table;
+    width: calc(100% - 0px);
+  }
+  .pagefoot .l { display:table-cell; text-align:left; }
+  .pagefoot .r { display:table-cell; text-align:right; }
+
+  /* ---------- FLOW LIST ---------- */
+  .flow { margin-top: 4px; }
+  .flow-item { display: table; width: 100%; margin-bottom: 10px; }
+  .flow-num { display: table-cell; width: 30px; vertical-align: top; }
+  .flow-num span {
+    display: inline-block;
+    width: 22px; height: 22px;
+    background: #4F46E5;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-size: 9.5pt;
+    font-weight: bold;
+  }
+  .flow-text { display: table-cell; vertical-align: top; padding-left: 10px; padding-top: 1px; color:#2B3247; font-size: 10pt; }
+
+  /* ---------- CARDS ---------- */
+  .cards { display: table; width: 100%; border-spacing: 16px 0; margin-top: 6px; }
+  .cardwrap { display: table-cell; width: 50%; vertical-align: top; }
+  .card {
+    border: 1px solid #E3E6EE;
+    border-radius: 10px;
+    padding: 18px 20px;
+    background: #FAFBFF;
+    height: 100%;
+  }
+  .card.reco { border-color: #4F46E5; background: #F5F6FF; }
+  .card-badge {
+    display: inline-block;
+    font-size: 7.7pt;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #fff;
+    background: #4F46E5;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 9px;
+  }
+  .card-badge.alt { background: #6B7280; }
+  .card h3 { font-size: 11.5pt; color: #11152B; margin-bottom: 7px; }
+  .card p { font-size: 9.4pt; color: #4B5266; margin-bottom: 0; }
+  .card .price { font-family:'Fraunces','Caladea',serif; font-size: 17pt; font-weight: 600; color:#11152B; margin: 2px 0 8px 0; letter-spacing:-0.3px; }
+
+  /* ---------- MILESTONE CARDS ---------- */
+  .mscard { border: 1px solid #E3E6EE; border-radius: 10px; margin-bottom: 18px; overflow: hidden; }
+  .mshead { display: table; width: 100%; background: #11152B; padding: 13px 20px; }
+  .mshead .ttl { display: table-cell; color: #fff; font-size: 12.3pt; font-weight: bold; vertical-align: middle; }
+  .mshead .time { display: table-cell; text-align: right; vertical-align: middle; }
+  .mshead .time span {
+    background: rgba(255,255,255,0.14);
+    color: #C7D2FE;
+    font-size: 9pt;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+  .msbody { display: table; width: 100%; padding: 16px 20px 18px 20px; background:#fff;}
+  .mscol { display: table-cell; width: 50%; vertical-align: top; padding-right: 14px; }
+  .mscol:last-child { padding-right:0; padding-left: 14px; border-left: 1px solid #EEF0F6; }
+  .mslabel { font-size: 8.3pt; font-weight: bold; letter-spacing: 1px; color: #4F46E5; margin-bottom: 6px; margin-top: 12px; }
+  .mslabel:first-child { margin-top: 0; }
+  ul.tight { list-style: none; padding: 0; margin: 0 0 2px 0; }
+  ul.tight li { font-size: 9.3pt; color: #353C50; padding-left: 13px; position: relative; margin-bottom: 4px; line-height:1.4; }
+  ul.tight li:before {
+    content: "";
+    width: 5px; height: 5px;
+    background: #C7CCDC;
+    border-radius: 50%;
+    position: absolute; left: 0; top: 5px;
+  }
+  ul.check li:before { background:#4F46E5; }
+  .risk-box {
+    background: #FFF8EC;
+    border: 1px solid #F4DEB0;
+    border-radius: 7px;
+    padding: 9px 11px;
+    font-size: 9.1pt;
+    color: #7A5816;
+    margin-top: 4px;
+  }
+  .risk-box b { color: #8A5B00; }
+  .excl-box { background: #F4F5F8; border-radius: 7px; padding: 8px 11px; font-size: 9.1pt; color: #5B6175; margin-top: 2px; }
+
+  .checkbox-note {
+    background:#F5F6FF; border:1px solid #C7D2FE; border-radius:10px;
+    padding:14px 18px; margin-top:16px;
+  }
+  .checkbox-note p { margin:0; color:#3730A3; font-size:9.6pt; }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 — COVER ============ -->
+<div class="page cover">
+  <div class="pad" style="padding-top:120px;">
+    <div class="cover-eyebrow">SCOPE &amp; PRICING</div>
+    <div class="cover-title">Milestones<br>1 &amp; 2</div>
+    <div class="cover-sub">Scope, Delivery &amp; Pricing</div>
+    <div class="cover-rule"></div>
+    <div class="cover-tag">Foundation, workspace and auth first, then the workflow builder and canvas. Priced two ways, with a review checkpoint before we go further.</div>
+  </div>
+  <div class="cover-meta">
+    <div class="cover-meta-cell"><b>Prepared for</b>Ben Liu</div>
+    <div class="cover-meta-cell"><b>Prepared by</b>Satyam Singh</div>
+    <div class="cover-meta-cell"><b>Date</b>June 21, 2026</div>
+  </div>
+</div>
+
+<!-- ============ PAGE 2 — SCOPE + CLARIFICATIONS ============ -->
+<div class="page">
+  <div class="pad">
+    <div class="kicker">PHASE 1 SCOPE</div>
+    <h1 class="section-title">What We're Building First</h1>
+    <p class="lead">Same goal you laid out, kept tight. Milestones 1 and 2 build the foundation and the canvas. The rest
+    of the loop (AI routing, task execution, Answer Memory) sits in Milestones 3 to 5. Support Requests, the Operator
+    Review Queue, Quick Send, export jobs, scheduled jobs, and semantic search all stay deferred until the core loop
+    is proven, as we agreed.</p>
+
+    <div class="flow">
+      <div class="flow-item"><div class="flow-num"><span>1</span></div>
+        <div class="flow-text">The operator creates Function Blocks on the canvas.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>2</span></div>
+        <div class="flow-text">They connect blocks with Process Lines.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>3</span></div>
+        <div class="flow-text">They configure each line's Handler, Approver, and CC steps.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>4</span></div>
+        <div class="flow-text">An end-user submits a messy request.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>5</span></div>
+        <div class="flow-text">AI suggests a route from the configured Process Lines.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>6</span></div>
+        <div class="flow-text">The receiving user responds, comments, approves, or requests changes.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>7</span></div>
+        <div class="flow-text">The request owner sees the final answer.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>8</span></div>
+        <div class="flow-text">The system creates a basic Provisional Answer Memory.</div></div>
+    </div>
+
+    <h2 class="sub-title">Two Things You Asked Me to Pin Down</h2>
+    <div class="cards">
+      <div class="cardwrap">
+        <div class="card">
+          <div class="card-badge alt">CANVAS IN PHASE 1</div>
+          <p>Simple but real: create a block, drag it, connect blocks with a Process Line, save positions, click a line
+          to configure it, and open the step editor for Handler / Approver / CC. No advanced visual features (no
+          auto-layout, minimap, grouping, or animated edges) in Phase 1.</p>
+        </div>
+      </div>
+      <div class="cardwrap">
+        <div class="card">
+          <div class="card-badge alt">ANSWER MEMORY: BASIC RETRIEVAL</div>
+          <p>On case close, the resolved answer plus its request context is saved as Provisional Answer Memory. On a
+          new request, the system surfaces similar past answers with a keyword and field match (Postgres full-text,
+          scoped to the workspace and Process Line). No embeddings or semantic ranking yet; that comes later.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagefoot"><div class="l">Sunbase Request Router · Milestones 1 &amp; 2</div><div class="r">02</div></div>
+</div>
+
+<!-- ============ PAGE 3 — MILESTONE 1 + 2 ============ -->
+<div class="page">
+  <div class="pad">
+    <div class="kicker">MILESTONE BREAKDOWN</div>
+    <h1 class="section-title" style="margin-bottom:18px;">Milestones 1 &amp; 2 in Detail</h1>
+
+    <div class="mscard">
+      <div class="mshead"><div class="ttl">Milestone 1: Foundation, Workspace &amp; Auth</div><div class="time"><span>4–6 days</span></div></div>
+      <div class="msbody">
+        <div class="mscol">
+          <div class="mslabel">DELIVERABLES</div>
+          <ul class="tight">
+            <li>Project setup, repo &amp; CI scaffolding</li>
+            <li>Database schema (workspace-scoped from day one)</li>
+            <li>Authentication</li>
+            <li>Workspace, user &amp; role management</li>
+          </ul>
+          <div class="mslabel">SCREENS</div>
+          <ul class="tight">
+            <li>Login</li>
+            <li>Workspace setup</li>
+            <li>User management</li>
+          </ul>
+        </div>
+        <div class="mscol">
+          <div class="mslabel">BACKEND MODULES / APIs</div>
+          <ul class="tight">
+            <li>Auth</li>
+            <li>Workspaces (+ isolation middleware)</li>
+            <li>Users</li>
+            <li>Roles</li>
+          </ul>
+          <div class="mslabel">EXCLUDED / DEFERRED</div>
+          <div class="excl-box">Canvas builder, AI routing, Answer Memory</div>
+          <div class="mslabel">MAIN RISK</div>
+          <div class="risk-box"><b>Foundational:</b> the early data-model calls on workspace isolation and roles shape everything built after them, so this is where I put the most care up front, not the least.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mscard">
+      <div class="mshead"><div class="ttl">Milestone 2: Workflow Builder &amp; Canvas</div><div class="time"><span>7–10 days</span></div></div>
+      <div class="msbody">
+        <div class="mscol">
+          <div class="mslabel">DELIVERABLES</div>
+          <ul class="tight">
+            <li>Function Block management</li>
+            <li>React Flow canvas: drag, drop, save positions</li>
+            <li>Process Line creation between blocks</li>
+            <li>Handler / Approver / CC step configuration</li>
+            <li>Line activation, validation &amp; retirement</li>
+          </ul>
+          <div class="mslabel">SCREENS</div>
+          <ul class="tight">
+            <li>Workflow Builder (canvas)</li>
+            <li>Function Block management</li>
+            <li>Process Line / Step editor</li>
+          </ul>
+        </div>
+        <div class="mscol">
+          <div class="mslabel">BACKEND MODULES / APIs</div>
+          <ul class="tight">
+            <li>Function Blocks</li>
+            <li>Process Lines</li>
+            <li>Process Line Steps</li>
+            <li>Workflow validation service</li>
+          </ul>
+          <div class="mslabel">EXCLUDED / DEFERRED</div>
+          <div class="excl-box">AI route suggestion, request submission, Answer Memory</div>
+          <div class="mslabel">MAIN RISK</div>
+          <div class="risk-box"><b>Design balance:</b> the workflow model has to stay open to future step types and rules without getting overbuilt for a Phase 1 that only needs one working Process Line.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagefoot"><div class="l">Sunbase Request Router · Milestones 1 &amp; 2</div><div class="r">03</div></div>
+</div>
+
+<!-- ============ PAGE 4 — DELIVERY + WHAT THIS IS ============ -->
+<div class="page">
+  <div class="pad">
+    <div class="kicker">DELIVERY</div>
+    <h1 class="section-title" style="margin-bottom:12px;">What You Get, and What You're Paying For</h1>
+    <p style="margin-bottom:12px;">Every milestone ends the same way, so "done" always means the same thing:</p>
+    <div class="card" style="background:#fff;">
+      <ul class="tight check" style="margin:0;">
+        <li>Code pushed to the repository (reviewable commits, not a zip dropped at the end)</li>
+        <li>A deployed demo you can click through</li>
+        <li>Database schema and migrations</li>
+        <li>The API modules listed for that milestone</li>
+        <li>The screens listed for that milestone</li>
+        <li>A short note of known limitations and anything deferred</li>
+      </ul>
+    </div>
+
+    <h2 class="sub-title">What This Actually Is</h2>
+    <div class="cards">
+      <div class="cardwrap">
+        <div class="card">
+          <div class="card-badge alt">NOT A NO-CODE WIRE-UP</div>
+          <p>This isn't dragging boxes around in n8n or Make to connect a few apps. It's full-stack AI engineering:
+          a real frontend, backend, database, infrastructure, and DevOps, written as proper code you own and can keep
+          building on.</p>
+        </div>
+      </div>
+      <div class="cardwrap">
+        <div class="card reco">
+          <div class="card-badge">A FOUNDATION, NOT A QUICK FIX</div>
+          <p>The money here is buying a base that holds. Built right the first time, you're not paying again later to
+          clean up cheap work or rip out the foundation before the real features can go on top. The next developer or
+          the next feature lands on solid ground.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagefoot"><div class="l">Sunbase Request Router · Milestones 1 &amp; 2</div><div class="r">04</div></div>
+</div>
+
+<!-- ============ PAGE 5 — PRICING + RISK ============ -->
+<div class="page">
+  <div class="pad">
+    <div class="kicker">PRICING</div>
+    <h1 class="section-title" style="margin-bottom:8px;">Two Ways to Pay, Same Total</h1>
+    <p class="lead" style="margin-bottom:14px;">Both options land at about the same place for Milestones 1 and 2, near
+    $3,800. Pick the way of working that suits you; the cost is the same either way. My listed rate is $47/hr, and this
+    is set below it because it's a multi-milestone build and the start of a longer working relationship.</p>
+
+    <div class="cards">
+      <div class="cardwrap">
+        <div class="card reco">
+          <div class="card-badge">FIXED PRICE · M1 + M2</div>
+          <div class="price">$3,800</div>
+          <p>Milestone 1 is $1,400, Milestone 2 is $2,400. Held in escrow and released only when you approve each
+          milestone against the definition of done on the previous page.</p>
+        </div>
+      </div>
+      <div class="cardwrap">
+        <div class="card">
+          <div class="card-badge alt">HOURLY · WEEKLY CAP</div>
+          <div class="price">$35<span style="font-size:10pt; font-weight:500; color:#6B7280;">/hr · max 40h/week</span></div>
+          <p>Billed weekly, with a working demo every Friday and that week's hours shared before it runs. Estimated
+          $3,100 to $4,500 across M1 and M2, landing around the same $3,800.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkbox-note" style="background:#F0FDF4; border-color:#A7F3D0;">
+      <p style="color:#166534;"><b>Either way, your risk is close to zero.</b> On fixed price the money sits in escrow
+      and is only released when you approve each milestone. On hourly, every hour I log shows up in the Upwork tracker
+      with screenshots, so you see exactly what you are paying for and can flag or dispute anything. And if Milestone 1
+      isn't what we agreed, you don't pay for it; I'd rather refund it than leave you stuck. I work for the long
+      relationship, not a few quick dollars and a bad reputation.</p>
+    </div>
+
+    <div class="checkbox-note">
+      <p><b>Checkpoint after Milestone 2:</b> we pause and review the foundation and canvas together before committing
+      to Milestones 3 to 5. No obligation past that point.</p>
+    </div>
+  </div>
+  <div class="pagefoot"><div class="l">Sunbase Request Router · Milestones 1 &amp; 2</div><div class="r">05</div></div>
+</div>
+
+<!-- ============ PAGE 6 — CLOSING ============ -->
+<div class="page last">
+  <div class="pad">
+    <div class="kicker">NEXT STEPS</div>
+    <h1 class="section-title">Getting Started</h1>
+    <p class="lead">If this looks right, the next step is simple: set up the contract you prefer, fixed or hourly, with
+    the payment method. Once I accept it, I get straight into Milestone 1, repository setup, codebase and infrastructure,
+    everything needed to get it moving.</p>
+
+    <h2 class="sub-title">How We'll Work</h2>
+    <ul class="tight" style="margin:0 0 12px 0;">
+      <li>Code pushed daily, so you see progress as it happens, not only at the end.</li>
+      <li>Code lives in your GitHub or GitLab (organization or personal) if you have one, otherwise mine, with the source handed over to you after every milestone.</li>
+      <li>Regular written updates, async by default, with a call whenever something needs one.</li>
+      <li>A working demo at the end of each milestone.</li>
+    </ul>
+
+    <p>Happy to adjust any of the numbers or the scope before we lock it in. If anything here is off from what you had
+    in mind, tell me and I'll rework it.</p>
+
+    <div style="margin-top:32px; border-top:1px solid #ECEEF3; padding-top:22px;">
+      <p style="margin-bottom:2px; font-weight:bold; color:#11152B;">Satyam Singh</p>
+      <p style="margin-bottom:0; color:#6B7280; font-size:9.3pt;">Full Stack AI Engineer</p>
+    </div>
+  </div>
+  <div class="pagefoot"><div class="l">Sunbase Request Router · Milestones 1 &amp; 2</div><div class="r">06</div></div>
+</div>
+
+</body>
+</html>
