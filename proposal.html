@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap');
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: 'Inter', 'Carlito', sans-serif;
+    color: #1E2530;
+    font-size: 10.3pt;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  svg text { font-family: 'Inter', 'Carlito', sans-serif; }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    position: relative;
+    page-break-after: always;
+    break-after: page;
+    overflow: hidden;
+  }
+  .pad { padding: 56px 60px; }
+  .last { page-break-after: auto; break-after: auto; }
+
+  /* ---------- COVER ---------- */
+  .cover {
+    background: #101230;
+    background: linear-gradient(160deg, #0B1130 0%, #161B4A 45%, #1B2B66 100%);
+    color: #ffffff;
+    height: 297mm;
+  }
+  .cover-eyebrow {
+    letter-spacing: 3px;
+    font-size: 10.5pt;
+    color: #8EA0E8;
+    font-weight: bold;
+    margin-bottom: 230px;
+  }
+  .cover-title {
+    font-family: 'Fraunces', 'Caladea', serif;
+    font-size: 46pt;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .cover-sub {
+    font-size: 16pt;
+    color: #C7D2FE;
+    margin-top: 16px;
+    font-weight: bold;
+  }
+  .cover-tag {
+    font-size: 11pt;
+    color: #93A3D8;
+    margin-top: 10px;
+    font-style: italic;
+  }
+  .cover-rule {
+    width: 64px;
+    height: 4px;
+    background: #6D7FF0;
+    margin-top: 28px;
+    border-radius: 2px;
+  }
+  .cover-meta {
+    position: absolute;
+    bottom: 64px;
+    left: 60px;
+    right: 60px;
+    border-top: 1px solid rgba(255,255,255,0.18);
+    padding-top: 22px;
+    display: table;
+    width: 100%;
+  }
+  .cover-meta-cell {
+    display: table-cell;
+    width: 33%;
+    color: #C7D2FE;
+    font-size: 9.5pt;
+    vertical-align: top;
+  }
+  .cover-meta-cell b { display:block; color:#fff; font-size:10.5pt; margin-bottom:3px; }
+
+  /* ---------- HEADINGS ---------- */
+  .kicker {
+    color: #4F46E5;
+    font-size: 9pt;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  h1.section-title {
+    font-size: 22pt;
+    color: #11152B;
+    font-weight: bold;
+    margin-bottom: 22px;
+    letter-spacing: -0.3px;
+  }
+  h2.sub-title {
+    font-size: 13pt;
+    color: #11152B;
+    font-weight: bold;
+    margin: 22px 0 10px 0;
+  }
+  p { margin-bottom: 10px; color: #3A4257; }
+  .lead { font-size: 11pt; color: #2B3247; margin-bottom: 18px; }
+
+  .pagefoot {
+    position: absolute;
+    bottom: 28px;
+    left: 60px;
+    right: 60px;
+    font-size: 8pt;
+    color: #A6ACBE;
+    border-top: 1px solid #ECEEF3;
+    padding-top: 8px;
+    display: table;
+    width: calc(100% - 0px);
+  }
+  .pagefoot .l { display:table-cell; text-align:left; }
+  .pagefoot .r { display:table-cell; text-align:right; }
+
+  /* ---------- FLOW LIST (Phase 1 goal) ---------- */
+  .flow {
+    margin-top: 4px;
+  }
+  .flow-item {
+    display: table;
+    width: 100%;
+    margin-bottom: 11px;
+  }
+  .flow-num {
+    display: table-cell;
+    width: 30px;
+    vertical-align: top;
+  }
+  .flow-num span {
+    display: inline-block;
+    width: 22px; height: 22px;
+    background: #4F46E5;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-size: 9.5pt;
+    font-weight: bold;
+  }
+  .flow-text { display: table-cell; vertical-align: top; padding-left: 10px; padding-top: 1px; color:#2B3247; font-size: 10pt; }
+
+  /* ---------- PRICING CARDS ---------- */
+  .cards { display: table; width: 100%; border-spacing: 16px 0; margin-top: 6px; }
+  .cardwrap { display: table-cell; width: 50%; vertical-align: top; }
+  .card {
+    border: 1px solid #E3E6EE;
+    border-radius: 10px;
+    padding: 18px 20px;
+    background: #FAFBFF;
+    height: 100%;
+  }
+  .card.reco { border-color: #4F46E5; background: #F5F6FF; }
+  .card-badge {
+    display: inline-block;
+    font-size: 7.7pt;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #fff;
+    background: #4F46E5;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 9px;
+  }
+  .card-badge.alt { background: #6B7280; }
+  .card h3 { font-size: 11.5pt; color: #11152B; margin-bottom: 7px; }
+  .card p { font-size: 9.4pt; color: #4B5266; margin-bottom: 0; }
+
+  /* ---------- MILESTONE CARDS ---------- */
+  .mscard {
+    border: 1px solid #E3E6EE;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    overflow: hidden;
+  }
+  .mshead {
+    display: table; width: 100%;
+    background: #11152B;
+    padding: 13px 20px;
+  }
+  .mshead .ttl { display: table-cell; color: #fff; font-size: 12.3pt; font-weight: bold; vertical-align: middle; }
+  .mshead .time { display: table-cell; text-align: right; vertical-align: middle; }
+  .mshead .time span {
+    background: rgba(255,255,255,0.14);
+    color: #C7D2FE;
+    font-size: 9pt;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+  .msbody { display: table; width: 100%; padding: 16px 20px 18px 20px; background:#fff;}
+  .mscol { display: table-cell; width: 50%; vertical-align: top; padding-right: 14px; }
+  .mscol:last-child { padding-right:0; padding-left: 14px; border-left: 1px solid #EEF0F6; }
+  .mslabel {
+    font-size: 8.3pt; font-weight: bold; letter-spacing: 1px; color: #4F46E5;
+    margin-bottom: 6px; margin-top: 12px;
+  }
+  .mslabel:first-child { margin-top: 0; }
+  ul.tight { list-style: none; padding: 0; margin: 0 0 2px 0; }
+  ul.tight li {
+    font-size: 9.3pt; color: #353C50; padding-left: 13px; position: relative; margin-bottom: 4px; line-height:1.4;
+  }
+  ul.tight li:before {
+    content: "";
+    width: 5px; height: 5px;
+    background: #C7CCDC;
+    border-radius: 50%;
+    position: absolute; left: 0; top: 5px;
+  }
+  .risk-box {
+    background: #FFF8EC;
+    border: 1px solid #F4DEB0;
+    border-radius: 7px;
+    padding: 9px 11px;
+    font-size: 9.1pt;
+    color: #7A5816;
+    margin-top: 4px;
+  }
+  .risk-box b { color: #8A5B00; }
+  .excl-box {
+    background: #F4F5F8;
+    border-radius: 7px;
+    padding: 8px 11px;
+    font-size: 9.1pt;
+    color: #5B6175;
+    margin-top: 2px;
+  }
+
+  /* ---------- TOTAL STRIP ---------- */
+  .totalstrip {
+    display: table; width: 100%;
+    background: #11152B;
+    border-radius: 10px;
+    padding: 16px 22px;
+    margin-top: 6px;
+  }
+  .totalstrip .a { display: table-cell; color: #C7D2FE; font-size: 10pt; vertical-align: middle; }
+  .totalstrip .b { display: table-cell; text-align: right; vertical-align: middle; }
+  .totalstrip .b span { color:#fff; font-size: 17pt; font-weight: bold; }
+  .totalstrip .b small { color:#9AA6D8; font-size: 9pt; display:block; }
+
+  table.legendtbl { width:100%; border-collapse: collapse; margin-top: 14px;}
+  table.legendtbl td { padding: 6px 0; font-size: 9.2pt; color:#3A4257; vertical-align: top; }
+  table.legendtbl td.num {
+    width: 24px; padding-right: 8px;
+  }
+  table.legendtbl .dot {
+    display:inline-block; width:18px; height:18px; border-radius:50%; color:#fff;
+    text-align:center; line-height:18px; font-size:8.5pt; font-weight:bold;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 — COVER ============ -->
+<div class="page cover">
+  <div class="pad" style="padding-top:120px;">
+    <div class="cover-eyebrow">PROPOSAL</div>
+    <div class="cover-title">Sunbase Request<br>Router</div>
+    <div class="cover-sub">Phase 1: Milestones and System Architecture</div>
+    <div class="cover-rule"></div>
+    <div class="cover-tag">A configurable canvas for routing requests, with the core loop working end to end</div>
+  </div>
+  <div class="cover-meta">
+    <div class="cover-meta-cell"><b>Prepared for</b>Ben Liu</div>
+    <div class="cover-meta-cell"><b>Prepared by</b>Satyam Singh</div>
+    <div class="cover-meta-cell"><b>Date</b>June 20, 2026</div>
+  </div>
+</div>
+
+<!-- ============ PAGE 2 — GOAL + ENGAGEMENT ============ -->
+<div class="page">
+  <div class="pad">
+    <div class="kicker">PHASE 1</div>
+    <h1 class="section-title">What Phase 1 Proves</h1>
+    <p class="lead">Phase 1 isn't a thin slice of the 60-page spec. It's the whole core loop working start to finish,
+    built on a configurable foundation instead of hard-coded departments. All of this has to work before anything
+    later (Support Requests, the Operator Review Queue, exports, and the rest) is worth building on top of it.</p>
+
+    <div class="flow">
+      <div class="flow-item"><div class="flow-num"><span>1</span></div>
+        <div class="flow-text"><b>The operator builds the workflow.</b> They create Function Blocks, drop them on the canvas, connect them with a Process Line, and set up its Handler, Approver, and CC steps.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>2</span></div>
+        <div class="flow-text"><b>An end-user submits a messy request</b> into that workflow.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>3</span></div>
+        <div class="flow-text"><b>AI reads the request</b>, works out what's actually being asked, and suggests a route from the Process Lines the operator set up. It doesn't lean on a hard-coded department list.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>4</span></div>
+        <div class="flow-text"><b>The receiving user responds.</b> They comment, approve, reject, or ask for changes.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>5</span></div>
+        <div class="flow-text"><b>The request owner sees the final answer</b> and closes the case.</div></div>
+      <div class="flow-item"><div class="flow-num"><span>6</span></div>
+        <div class="flow-text"><b>The answer gets saved as Answer Memory</b>, so a similar request later can reuse it instead of starting from scratch.</div></div>
+    </div>
+
+    <h2 class="sub-title">Deliberately Deferred</h2>
+    <p>To keep Phase 1 from bloating, it leaves a few things out: Support Requests (cross-function escalation), the
+    Operator Review Queue, Quick Send, async export, scheduled maintenance jobs, and semantic Answer Memory search.
+    None of these get cut for good. The foundation is built to carry them, so they slot into the milestones after
+    Phase 1 without a redesign.</p>
+
+    <h2 class="sub-title">How I'd Bill It</h2>
+    <div class="cards">
+      <div class="cardwrap">
+        <div class="card reco">
+          <div class="card-badge">RECOMMENDED</div>
+          <h3>Hourly</h3>
+          <p>A canvas tool like this gets refined the moment you start clicking through it. Step types, validation
+          rules, and assignment logic almost always shift a bit after the first real walkthrough. Hourly soaks up that
+          kind of change as it happens, so we're not stopping to renegotiate scope halfway through a phase.</p>
+        </div>
+      </div>
+      <div class="cardwrap">
+        <div class="card">
+          <div class="card-badge alt">ALSO AVAILABLE</div>
+          <h3>Fixed-Price Milestones</h3>
+          <p>If you'd rather lock the cost up front, I'm just as happy to run this as five fixed-price milestones, one
+          per phase on the next pages, each one scoped, priced, and invoiced when it ships.</p>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:14px; color:#6B7280; font-size:9.3pt;">Either way the scope and order below stay exactly the same. Only the billing changes.</p>
+  </div>
+  <div class="pagefoot"><div class="l">Sunbase Request Router · Phase 1 Proposal</div><div class="r">02</div></div>
+</div>
+
+<!-- ============ PAGE 3 — MILESTONES 1+2 ============ -->
+<div class="page">
+  <div class="pad">
+    <div class="kicker">MILESTONE BREAKDOWN</div>
+    <h1 class="section-title" style="margin-bottom:18px;">Phase 1 Milestones</h1>
+
+    <div class="mscard">
+      <div class="mshead"><div class="ttl">Milestone 1: Foundation, Workspace &amp; Auth</div><div class="time"><span>4–6 days</span></div></div>
+      <div class="msbody">
+        <div class="mscol">
+          <div class="mslabel">DELIVERABLES</div>
+          <ul class="tight">
+            <li>Project setup, repo &amp; CI scaffolding</li>
+            <li>Database schema (workspace-scoped from day one)</li>
+            <li>Authentication</li>
+            <li>Workspace, user &amp; role management</li>
+          </ul>
+          <div class="mslabel">SCREENS</div>
+          <ul class="tight">
+            <li>Login</li>
+            <li>Workspace setup</li>
+            <li>User management</li>
+          </ul>
+        </div>
+        <div class="mscol">
+          <div class="mslabel">BACKEND MODULES / APIs</div>
+          <ul class="tight">
+            <li>Auth</li>
+            <li>Workspaces (+ isolation middleware)</li>
+            <li>Users</li>
+            <li>Roles</li>
+          </ul>
+          <div class="mslabel">EXCLUDED / DEFERRED</div>
+          <div class="excl-box">Canvas builder, AI routing, Answer Memory</div>
+          <div class="mslabel">MAIN RISK</div>
+          <div class="risk-box"><b>Foundational:</b> the early data-model calls on workspace isolation and roles shape everything built after them, so this is where I put the most care up front, not the least.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mscard">
+      <div class="mshead"><div class="ttl">Milestone 2: Workflow Builder &amp; Canvas</div><div class="time"><span>7–10 days</span></div></div>
+      <div class="msbody">
+        <div class="mscol">
+          <div class="mslabel">DELIVERABLES</div>
+          <ul class="tight">
+            <li>Function Block management</li>
+            <li>React Flow canvas: drag, drop, save positions</li>
+            <li>Process Line creation between blocks</li>
+            <li>Handler / Approver / CC step configuration</li>
+            <li>Line activation, validation &amp; retirement</li>
+          </ul>
+          <div class="mslabel">SCREENS</div>
+          <ul class="tight">
+            <li>Workflow Builder (canvas)</li>
+            <li>Function Block management</li>
+            <li>Process Line / Step editor</li>
+          </ul>
+        </div>
+        <div class="mscol">
+          <div class="mslabel">BACKEND MODULES / APIs</div>
+          <ul class="tight">
+            <li>Function Blocks</li>
+            <li>Process Lines</li>
+            <li>Process Line Steps</li>
+            <li>Workflow validation service</li>
+          </ul>
+          <div class="mslabel">EXCLUDED / DEFERRED</div>
+          <div class="excl-box">AI route suggestion, request submission, Answer Memory</div>
+          <div class="mslabel">MAIN RISK</div>
+          <div class="risk-box"><b>Design balance:</b> the workflow model has to stay open to future step types and rules without getting overbuilt for a Phase 1 that only needs one working Process Line.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagefoot"><div class="l">Sunbase Request Router · Phase 1 Proposal</div><div class="r">03</div></div>
+</div>
+
+<!-- ============ PAGE 4 — MILESTONES 3+4 ============ -->
+<div class="page">
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:16px;">PHASE 1 MILESTONES · CONTINUED</div>
+    <div class="mscard">
+      <div class="mshead"><div class="ttl">Milestone 3: Request Intake, AI &amp; Routing</div><div class="time"><span>5–7 days</span></div></div>
+      <div class="msbody">
+        <div class="mscol">
+          <div class="mslabel">DELIVERABLES</div>
+          <ul class="tight">
+            <li>Request submission UI</li>
+            <li>AI intent interpretation (versioned prompt, JSON-validated)</li>
+            <li>Fallback to manual routing if AI fails or times out</li>
+            <li>Route suggestion engine using configured Process Lines</li>
+            <li>Route confirmation → Department Request + Tasks created in one transaction</li>
+          </ul>
+          <div class="mslabel">SCREENS</div>
+          <ul class="tight">
+            <li>New Request</li>
+            <li>Route Review / Confirmation</li>
+          </ul>
+        </div>
+        <div class="mscol">
+          <div class="mslabel">BACKEND MODULES / APIs</div>
+          <ul class="tight">
+            <li>Requests</li>
+            <li>AI Service (interpret &amp; suggest-route operations)</li>
+            <li>Routing Service</li>
+            <li>Process Line context filtering for prompts</li>
+          </ul>
+          <div class="mslabel">EXCLUDED / DEFERRED</div>
+          <div class="excl-box">Answer Memory suggestion, Quick Send, full confidence scoring</div>
+          <div class="mslabel">MAIN RISK</div>
+          <div class="risk-box"><b>Depends on configuration:</b> the route suggestions are only as good as the use-when and do-not-use-when examples on each Process Line, so this needs realistic test data, not one happy-path line.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mscard">
+      <div class="mshead"><div class="ttl">Milestone 4: Task Execution &amp; Approvals</div><div class="time"><span>5–7 days</span></div></div>
+      <div class="msbody">
+        <div class="mscol">
+          <div class="mslabel">DELIVERABLES</div>
+          <ul class="tight">
+            <li>Receiving inbox: two-zone layout (needs action vs. for awareness)</li>
+            <li>Task detail, comments, official responses</li>
+            <li>Approver request-changes flow</li>
+            <li>Case detail: summary, active blockers, full history</li>
+          </ul>
+          <div class="mslabel">SCREENS</div>
+          <ul class="tight">
+            <li>Inbox</li>
+            <li>Task Detail</li>
+            <li>Case Detail</li>
+          </ul>
+        </div>
+        <div class="mscol">
+          <div class="mslabel">BACKEND MODULES / APIs</div>
+          <ul class="tight">
+            <li>Tasks</li>
+            <li>Responses</li>
+            <li>Comments</li>
+            <li>Approval workflow + status-transition guards</li>
+          </ul>
+          <div class="mslabel">EXCLUDED / DEFERRED</div>
+          <div class="excl-box">Support Requests, advanced analytics, exports</div>
+          <div class="mslabel">MAIN RISK</div>
+          <div class="risk-box"><b>State correctness:</b> status transitions get enforced server-side so a case can't get stuck, skip a required approval, or show the wrong status.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagefoot"><div class="l">Sunbase Request Router · Phase 1 Proposal</div><div class="r">04</div></div>
+</div>
+
+<!-- ============ PAGE 5 — MILESTONE 5 + TOTAL + TIMELINE ============ -->
+<div class="page">
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:16px;">PHASE 1 MILESTONES · CONTINUED</div>
+    <div class="mscard">
+      <div class="mshead"><div class="ttl">Milestone 5: Answer Memory &amp; Hardening</div><div class="time"><span>3–5 days</span></div></div>
+      <div class="msbody">
+        <div class="mscol">
+          <div class="mslabel">DELIVERABLES</div>
+          <ul class="tight">
+            <li>Provisional Answer Memory created on case close</li>
+            <li>Basic retrieval surfaced on similar new requests</li>
+            <li>Core audit/event logging</li>
+            <li>Error-handling pass, QA, staging &amp; production deploy</li>
+          </ul>
+          <div class="mslabel">SCREENS</div>
+          <ul class="tight">
+            <li>Answer Memory list (admin)</li>
+            <li>Basic admin overview</li>
+          </ul>
+        </div>
+        <div class="mscol">
+          <div class="mslabel">BACKEND MODULES / APIs</div>
+          <ul class="tight">
+            <li>Answer Memory</li>
+            <li>Event Log</li>
+          </ul>
+          <div class="mslabel">EXCLUDED / DEFERRED</div>
+          <div class="excl-box">Operator review queue, export jobs, scheduled jobs, semantic search</div>
+          <div class="mslabel">MAIN RISK</div>
+          <div class="risk-box"><b>Sets the ceiling:</b> how I structure Answer Memory now decides how easily it grows into embedding-based semantic search later.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="totalstrip">
+      <div class="a">Phase 1: the full loop, builder to Answer Memory</div>
+      <div class="b"><span>3 – 5 weeks</span><small>24 – 35 working days across 5 milestones</small></div>
+    </div>
+
+    <h2 class="sub-title">Rough Timeline</h2>
+    <p style="margin-bottom:6px;">One way the range above could play out. Real pacing depends on how fast feedback comes back on each milestone.</p>
+    <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:680px; display:block; margin:0 auto;">
+      <!-- gridlines -->
+      <line x1="264" y1="34" x2="264" y2="222" stroke="#E7E9F1" stroke-width="1"/>
+      <line x1="368" y1="34" x2="368" y2="222" stroke="#E7E9F1" stroke-width="1"/>
+      <line x1="472" y1="34" x2="472" y2="222" stroke="#E7E9F1" stroke-width="1"/>
+      <line x1="576" y1="34" x2="576" y2="222" stroke="#E7E9F1" stroke-width="1"/>
+      <line x1="680" y1="34" x2="680" y2="222" stroke="#E7E9F1" stroke-width="1"/>
+      <line x1="160" y1="34" x2="680" y2="34" stroke="#D7DAE6" stroke-width="1"/>
+      <!-- week labels -->
+      <text x="212" y="24" font-size="8" font-weight="bold" fill="#9096A8" text-anchor="middle" font-family="Carlito">WEEK 1</text>
+      <text x="316" y="24" font-size="8" font-weight="bold" fill="#9096A8" text-anchor="middle" font-family="Carlito">WEEK 2</text>
+      <text x="420" y="24" font-size="8" font-weight="bold" fill="#9096A8" text-anchor="middle" font-family="Carlito">WEEK 3</text>
+      <text x="524" y="24" font-size="8" font-weight="bold" fill="#9096A8" text-anchor="middle" font-family="Carlito">WEEK 4</text>
+      <text x="628" y="24" font-size="8" font-weight="bold" fill="#9096A8" text-anchor="middle" font-family="Carlito">WEEK 5</text>
+
+      <!-- row labels -->
+      <text x="0" y="59" font-size="9" font-weight="bold" fill="#1E2530" font-family="Carlito">M1 Foundation</text>
+      <text x="0" y="99" font-size="9" font-weight="bold" fill="#1E2530" font-family="Carlito">M2 Workflow Builder</text>
+      <text x="0" y="139" font-size="9" font-weight="bold" fill="#1E2530" font-family="Carlito">M3 AI &amp; Routing</text>
+      <text x="0" y="179" font-size="9" font-weight="bold" fill="#1E2530" font-family="Carlito">M4 Execution &amp; Approvals</text>
+      <text x="0" y="219" font-size="9" font-weight="bold" fill="#1E2530" font-family="Carlito">M5 Answer Memory</text>
+
+      <!-- bars -->
+      <rect x="160" y="44" width="74.3" height="22" rx="5" fill="#4F46E5"/>
+      <text x="240" y="59" font-size="8.3" fill="#4B5266" font-family="Carlito">5d</text>
+
+      <rect x="234.3" y="84" width="133.7" height="22" rx="5" fill="#6D28D9"/>
+      <text x="374" y="99" font-size="8.3" fill="#4B5266" font-family="Carlito">9d</text>
+
+      <rect x="368" y="124" width="89" height="22" rx="5" fill="#2563EB"/>
+      <text x="463" y="139" font-size="8.3" fill="#4B5266" font-family="Carlito">6d</text>
+
+      <rect x="457" y="164" width="89" height="22" rx="5" fill="#0891B2"/>
+      <text x="552" y="179" font-size="8.3" fill="#4B5266" font-family="Carlito">6d</text>
+
+      <rect x="546" y="204" width="59.7" height="22" rx="5" fill="#059669"/>
+      <text x="612" y="219" font-size="8.3" fill="#4B5266" font-family="Carlito">4d</text>
+
+      <!-- buffer -->
+      <rect x="605.7" y="204" width="74.3" height="22" rx="5" fill="none" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="3,3"/>
+
+      <!-- legend -->
+      <rect x="160" y="240" width="10" height="6" rx="2" fill="none" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="2,2"/>
+      <text x="176" y="245.5" font-size="8" fill="#8B91A6" font-family="Carlito">Buffer for feedback &amp; QA rounds</text>
+    </svg>
+  </div>
+  <div class="pagefoot"><div class="l">Sunbase Request Router · Phase 1 Proposal</div><div class="r">05</div></div>
+</div>
+
+<!-- ============ PAGE 6 — ARCHITECTURE ============ -->
+<div class="page">
+  <div class="pad" style="padding-bottom:30px;">
+    <div class="kicker">SYSTEM DESIGN</div>
+    <h1 class="section-title" style="margin-bottom:10px;">Architecture &amp; Request Flow</h1>
+    <p style="margin-bottom:14px;">One configurable canvas runs every workspace's workflow. The numbered path below
+    follows a single request from submission through to Answer Memory. The notes under the diagram cover how the
+    system keeps working when one piece fails, and how it grows as the rest of the spec lands.</p>
+    <svg viewBox="0 0 674 652" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:674px; display:block; margin:0 auto;">
+      <!-- ===== ROW A: FRONTEND ===== -->
+      <rect x="0" y="0" width="674" height="150" rx="12" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1.4"/>
+      <text x="16" y="21" font-size="9.3" font-weight="bold" letter-spacing="0.5" fill="#3730A3" font-family="Carlito">FRONTEND · NEXT.JS · SHADCN · TAILWIND · REACT FLOW · REACT QUERY</text>
+
+      <rect x="14" y="34" width="206" height="104" rx="8" fill="#ffffff" stroke="#C7D2FE" stroke-width="1.1"/>
+      <text x="117" y="54" font-size="9.2" font-weight="bold" fill="#1E2530" text-anchor="middle" font-family="Carlito">Admin / Operator</text>
+      <text x="117" y="66" font-size="9.2" font-weight="bold" fill="#1E2530" text-anchor="middle" font-family="Carlito">Builder Layer</text>
+      <text x="117" y="86" font-size="7.7" fill="#5B6175" text-anchor="middle" font-family="Carlito">Function Blocks · Canvas</text>
+      <text x="117" y="98" font-size="7.7" fill="#5B6175" text-anchor="middle" font-family="Carlito">Process Lines · Step Editor</text>
+
+      <rect x="232" y="34" width="206" height="104" rx="8" fill="#ffffff" stroke="#C7D2FE" stroke-width="1.1"/>
+      <text x="335" y="54" font-size="9.2" font-weight="bold" fill="#1E2530" text-anchor="middle" font-family="Carlito">End-User Layer</text>
+      <text x="335" y="66" font-size="9.2" font-weight="bold" fill="#1E2530" text-anchor="middle" font-family="Carlito">(Request Owner)</text>
+      <text x="335" y="86" font-size="7.7" fill="#5B6175" text-anchor="middle" font-family="Carlito">Submit Request · Route Review</text>
+      <text x="335" y="98" font-size="7.7" fill="#5B6175" text-anchor="middle" font-family="Carlito">My Requests · Case Detail</text>
+
+      <rect x="450" y="34" width="206" height="104" rx="8" fill="#ffffff" stroke="#C7D2FE" stroke-width="1.1"/>
+      <text x="553" y="54" font-size="9.2" font-weight="bold" fill="#1E2530" text-anchor="middle" font-family="Carlito">Receiving-User</text>
+      <text x="553" y="66" font-size="9.2" font-weight="bold" fill="#1E2530" text-anchor="middle" font-family="Carlito">Layer</text>
+      <text x="553" y="86" font-size="7.7" fill="#5B6175" text-anchor="middle" font-family="Carlito">Inbox (2-zone) · Task Detail</text>
+      <text x="553" y="98" font-size="7.7" fill="#5B6175" text-anchor="middle" font-family="Carlito">Approvals</text>
+
+      <!-- arrow Frontend -> Backend -->
+      <line x1="337" y1="150" x2="337" y2="180" stroke="#9AA6D8" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="350" y="169" font-size="7.8" fill="#7C86AD" font-family="Carlito">REST API (HTTPS)</text>
+
+      <!-- ===== ROW B: BACKEND ===== -->
+      <rect x="0" y="182" width="674" height="158" rx="12" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1.4"/>
+      <text x="16" y="203" font-size="9.3" font-weight="bold" letter-spacing="0.5" fill="#5B21B6" font-family="Carlito">BACKEND · NESTJS API (PRISMA ORM)</text>
+
+      <!-- module chips row1 -->
+      <rect x="14" y="216" width="121.2" height="26" rx="6" fill="#ffffff" stroke="#DDD6FE"/>
+      <text x="74.6" y="232.5" font-size="8.2" fill="#1E2530" text-anchor="middle" font-family="Carlito">Auth</text>
+      <rect x="145.2" y="216" width="121.2" height="26" rx="6" fill="#ffffff" stroke="#DDD6FE"/>
+      <text x="205.8" y="232.5" font-size="8.2" fill="#1E2530" text-anchor="middle" font-family="Carlito">Workspaces</text>
+      <rect x="276.4" y="216" width="121.2" height="26" rx="6" fill="#ffffff" stroke="#DDD6FE"/>
+      <text x="337" y="232.5" font-size="8.2" fill="#1E2530" text-anchor="middle" font-family="Carlito">Users</text>
+      <rect x="407.6" y="216" width="121.2" height="26" rx="6" fill="#ffffff" stroke="#DDD6FE"/>
+      <text x="468.2" y="232.5" font-size="8.2" fill="#1E2530" text-anchor="middle" font-family="Carlito">Function Blocks</text>
+      <rect x="538.8" y="216" width="121.2" height="26" rx="6" fill="#ffffff" stroke="#DDD6FE"/>
+      <text x="599.4" y="232.5" font-size="8.2" fill="#1E2530" text-anchor="middle" font-family="Carlito">Process Lines</text>
+
+      <!-- module chips row2 -->
+      <rect x="14" y="250" width="121.2" height="26" rx="6" fill="#ffffff" stroke="#DDD6FE"/>
+      <text x="74.6" y="266.5" font-size="8.2" fill="#1E2530" text-anchor="middle" font-family="Carlito">Requests</text>
+      <rect x="145.2" y="250" width="121.2" height="26" rx="6" fill="#ffffff" stroke="#DDD6FE"/>
+      <text x="205.8" y="266.5" font-size="8.2" fill="#1E2530" text-anchor="middle" font-family="Carlito">Tasks</text>
+      <rect x="276.4" y="250" width="121.2" height="26" rx="6" fill="#ffffff" stroke="#DDD6FE"/>
+      <text x="337" y="266.5" font-size="8.2" fill="#1E2530" text-anchor="middle" font-family="Carlito">Responses</text>
+      <rect x="407.6" y="250" width="121.2" height="26" rx="6" fill="#ffffff" stroke="#DDD6FE"/>
+      <text x="468.2" y="266.5" font-size="8.2" fill="#1E2530" text-anchor="middle" font-family="Carlito">Answer Memory</text>
+      <rect x="538.8" y="250" width="121.2" height="26" rx="6" fill="#fff7ed" stroke="#FDBA74"/>
+      <text x="599.4" y="266.5" font-size="8.2" fill="#9A3412" text-anchor="middle" font-family="Carlito" font-weight="bold">AI Service</text>
+
+      <text x="337" y="298" font-size="7.8" fill="#7C6BAE" text-anchor="middle" font-family="Carlito">Workspace-scoped on every call · server-side status-transition guards · transactional outbox for events</text>
+      <text x="337" y="312" font-size="7.8" fill="#7C6BAE" text-anchor="middle" font-family="Carlito">idempotency keys on send / respond / close / export · provider-agnostic AI behind one interface</text>
+
+      <!-- arrows Backend -> Row C -->
+      <line x1="337" y1="340" x2="84" y2="372" stroke="#9AA6D8" stroke-width="1.6" marker-end="url(#arrow)"/>
+      <line x1="337" y1="340" x2="253" y2="372" stroke="#9AA6D8" stroke-width="1.6" marker-end="url(#arrow)"/>
+      <line x1="337" y1="340" x2="422" y2="372" stroke="#9AA6D8" stroke-width="1.6" marker-end="url(#arrow)"/>
+      <line x1="337" y1="340" x2="591" y2="372" stroke="#9AA6D8" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+      <!-- ===== ROW C: DATA / QUEUE / AI / STORAGE ===== -->
+      <rect x="4" y="372" width="157.5" height="150" rx="10" fill="#F0FDFA" stroke="#99F6E4" stroke-width="1.3"/>
+      <text x="82.75" y="395" font-size="9" font-weight="bold" fill="#0D9488" text-anchor="middle" font-family="Carlito">PostgreSQL</text>
+      <text x="82.75" y="408" font-size="7.4" fill="#5B6175" text-anchor="middle" font-family="Carlito">(Prisma ORM)</text>
+      <text x="82.75" y="432" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">Workspaces · Process Lines</text>
+      <text x="82.75" y="445" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">Requests · Tasks</text>
+      <text x="82.75" y="458" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">Answer Memory · Event Log</text>
+
+      <rect x="173.5" y="372" width="157.5" height="150" rx="10" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1.3"/>
+      <text x="252.25" y="395" font-size="9" font-weight="bold" fill="#B45309" text-anchor="middle" font-family="Carlito">Background Jobs</text>
+      <text x="252.25" y="408" font-size="7.4" fill="#5B6175" text-anchor="middle" font-family="Carlito">(Redis/BullMQ or SQS)</text>
+      <text x="252.25" y="430" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">AI processing · Notifications</text>
+      <text x="252.25" y="443" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">Stale-task scan</text>
+      <text x="252.25" y="463" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">Retries with backoff</text>
+      <text x="252.25" y="476" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">Dead-letter queue</text>
+
+      <rect x="343" y="372" width="157.5" height="150" rx="10" fill="#FAF5FF" stroke="#E9D5FF" stroke-width="1.3"/>
+      <text x="421.75" y="395" font-size="9" font-weight="bold" fill="#7E22CE" text-anchor="middle" font-family="Carlito">AI Provider Layer</text>
+      <text x="421.75" y="408" font-size="7.4" fill="#5B6175" text-anchor="middle" font-family="Carlito">(provider-agnostic)</text>
+      <text x="421.75" y="430" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">Claude · OpenAI · future</text>
+      <text x="421.75" y="443" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">Timeouts, bounded retries</text>
+      <text x="421.75" y="463" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">Circuit breaker</text>
+      <text x="421.75" y="476" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">Fallback to manual routing</text>
+
+      <rect x="512.5" y="372" width="157.5" height="150" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.3"/>
+      <text x="591.25" y="395" font-size="9" font-weight="bold" fill="#475569" text-anchor="middle" font-family="Carlito">File Storage</text>
+      <text x="591.25" y="408" font-size="7.4" fill="#5B6175" text-anchor="middle" font-family="Carlito">(S3 or equivalent)</text>
+      <text x="591.25" y="432" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">Exports</text>
+      <text x="591.25" y="445" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">attachments</text>
+      <text x="591.25" y="458" font-size="7.4" fill="#3A4257" text-anchor="middle" font-family="Carlito">signed URLs</text>
+
+      <!-- arrow Row C -> Deployment -->
+      <line x1="337" y1="522" x2="337" y2="552" stroke="#9AA6D8" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="350" y="541" font-size="7.8" fill="#7C86AD" font-family="Carlito">deploys to</text>
+
+      <!-- ===== ROW D: DEPLOYMENT ===== -->
+      <rect x="0" y="554" width="674" height="92" rx="12" fill="#11152B"/>
+      <text x="16" y="572" font-size="8.6" font-weight="bold" letter-spacing="1.5" fill="#8A93C9" font-family="Carlito">DEPLOYMENT</text>
+
+      <rect x="14" y="582" width="154" height="50" rx="7" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.18)"/>
+      <text x="91" y="603" font-size="8.6" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="Carlito">Vercel</text>
+      <text x="91" y="617" font-size="7.3" fill="#9AA6D8" text-anchor="middle" font-family="Carlito">Frontend hosting</text>
+
+      <rect x="178" y="582" width="154" height="50" rx="7" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.18)"/>
+      <text x="255" y="603" font-size="8.6" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="Carlito">AWS / Containers</text>
+      <text x="255" y="617" font-size="7.3" fill="#9AA6D8" text-anchor="middle" font-family="Carlito">Backend hosting</text>
+
+      <rect x="342" y="582" width="154" height="50" rx="7" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.18)"/>
+      <text x="419" y="603" font-size="8.6" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="Carlito">Managed PostgreSQL</text>
+      <text x="419" y="617" font-size="7.3" fill="#9AA6D8" text-anchor="middle" font-family="Carlito">e.g., RDS</text>
+
+      <rect x="506" y="582" width="154" height="50" rx="7" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.18)"/>
+      <text x="583" y="603" font-size="8.6" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="Carlito">S3</text>
+      <text x="583" y="617" font-size="7.3" fill="#9AA6D8" text-anchor="middle" font-family="Carlito">Object storage</text>
+
+      <!-- ===== LEGEND: REQUEST LIFECYCLE ===== -->
+      <rect x="4" y="666" width="666" height="156" rx="10" fill="#FAFBFF" stroke="#E3E6EE" stroke-width="1.2"/>
+      <text x="20" y="687" font-size="8.6" font-weight="bold" letter-spacing="1.2" fill="#4F46E5" font-family="Carlito">REQUEST LIFECYCLE</text>
+
+      <circle cx="28" cy="709" r="9" fill="#4F46E5"/><text x="28" y="712" font-size="8" fill="#fff" text-anchor="middle" font-family="Carlito" font-weight="bold">1</text>
+      <text x="44" y="712" font-size="8.3" fill="#353C50" font-family="Carlito">End-user submits a messy request</text>
+
+      <circle cx="28" cy="737" r="9" fill="#4F46E5"/><text x="28" y="740" font-size="8" fill="#fff" text-anchor="middle" font-family="Carlito" font-weight="bold">2</text>
+      <text x="44" y="740" font-size="8.3" fill="#353C50" font-family="Carlito">AI interprets intent &amp; suggests a route</text>
+
+      <circle cx="28" cy="765" r="9" fill="#4F46E5"/><text x="28" y="768" font-size="8" fill="#fff" text-anchor="middle" font-family="Carlito" font-weight="bold">3</text>
+      <text x="44" y="768" font-size="8.3" fill="#353C50" font-family="Carlito">Route confirmed, tasks created transactionally</text>
+
+      <circle cx="356" cy="709" r="9" fill="#0891B2"/><text x="356" y="712" font-size="8" fill="#fff" text-anchor="middle" font-family="Carlito" font-weight="bold">4</text>
+      <text x="372" y="712" font-size="8.3" fill="#353C50" font-family="Carlito">Receiving user responds &amp; approves</text>
+
+      <circle cx="356" cy="737" r="9" fill="#0891B2"/><text x="356" y="740" font-size="8" fill="#fff" text-anchor="middle" font-family="Carlito" font-weight="bold">5</text>
+      <text x="372" y="740" font-size="8.3" fill="#353C50" font-family="Carlito">Final answer assembled; case closed</text>
+
+      <circle cx="356" cy="765" r="9" fill="#0891B2"/><text x="356" y="768" font-size="8" fill="#fff" text-anchor="middle" font-family="Carlito" font-weight="bold">6</text>
+      <text x="372" y="768" font-size="8.3" fill="#353C50" font-family="Carlito">Answer Memory stored for reuse</text>
+
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#9AA6D8"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+  <div class="pagefoot"><div class="l">Sunbase Request Router · Phase 1 Proposal</div><div class="r">06</div></div>
+</div>
+
+<!-- ============ PAGE 7 — CLOSING ============ -->
+<div class="page last">
+  <div class="pad">
+    <div class="kicker">SYSTEM DESIGN · CONTINUED</div>
+    <h2 class="sub-title" style="margin-top:0; margin-bottom:8px;">Built to Bend, Not Break</h2>
+    <p style="margin-bottom:12px;">Two decisions matter most this early: the system should keep working when one
+    part has a bad day, and adding the deferred features later should mean writing new code, not unpicking old code.
+    Here's how the foundation handles both.</p>
+    <div class="cards">
+      <div class="cardwrap">
+        <div class="card">
+          <div class="card-badge alt">STAYS UP WHEN THINGS FAIL</div>
+          <ul class="tight" style="margin-top:4px;">
+            <li>AI runs as a background job with a timeout, a few retries, and a circuit breaker. If it stalls or goes down, the request falls back to manual routing instead of hanging.</li>
+            <li>A transactional outbox writes each state change and the notifications it triggers in the same database transaction, so nothing is lost if a worker dies mid-send.</li>
+            <li>The job queue retries with backoff and parks repeat failures in a dead-letter queue, so a bad job is visible and replayable, never silently dropped.</li>
+            <li>Idempotency keys and server-side status guards stop retries and double-clicks from creating duplicates or invalid states.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cardwrap">
+        <div class="card">
+          <div class="card-badge">GROWS WITHOUT A REWRITE</div>
+          <ul class="tight" style="margin-top:4px;">
+            <li>The whole workflow is data-driven (Function Blocks, Process Lines, Steps), so new step types and routing rules are config and a handler, not a schema rewrite.</li>
+            <li>The AI sits behind one provider-agnostic interface, so swapping a model or adding a new one is a config change, not a refactor.</li>
+            <li>The event log and versioned prompts give clean seams for the analytics, Operator Review Queue, and semantic Answer Memory search that come later.</li>
+            <li>Deferred features like Support Requests, exports, and scheduled jobs attach as new NestJS modules on the same foundation.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="kicker" style="margin-top:44px;">NEXT STEPS</div>
+    <h1 class="section-title">Getting Started</h1>
+    <p class="lead">That's the full Phase 1 loop: workflow builder, AI-assisted routing, task execution and approvals,
+    and Answer Memory. The foundation under it is built to carry the rest of the spec later without a rebuild.</p>
+    <p>If this lines up with what you had in mind, I can start on Milestone 1 once we pick a billing approach
+    (hourly or fixed-price) and I have access. Want to dig into any part first, like the workflow model, the AI
+    prompt and fallback design, or the architecture? Say the word and I'll walk you through it.</p>
+
+    <div style="margin-top:32px; border-top:1px solid #ECEEF3; padding-top:22px;">
+      <p style="margin-bottom:2px; font-weight:bold; color:#11152B;">Satyam Singh</p>
+      <p style="margin-bottom:0; color:#6B7280; font-size:9.3pt;">Full Stack AI Engineer</p>
+    </div>
+  </div>
+  <div class="pagefoot"><div class="l">Sunbase Request Router · Phase 1 Proposal</div><div class="r">07</div></div>
+</div>
+
+</body>
+</html>
